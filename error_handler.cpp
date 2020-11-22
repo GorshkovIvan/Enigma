@@ -101,7 +101,7 @@ int Error_handler::check_character(char ch){
 
 int Error_handler::check_plugboard(const char* filename){
 
-  int plugboard[NUM_LETTERS / 2];
+  int plugboard[NUM_LETTERS];
   int count = load_data(filename, plugboard);
 
   if(count % 2 != 0){
