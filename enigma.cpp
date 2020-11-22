@@ -169,7 +169,7 @@ int Rotor::get_notches(int notches_array[]){
     for(auto notch_index = 0u; notch_index < notches.size(); notch_index++){
 
       notches_array[notch_index] = notches[notch_index];
-      cout << notches_array[notch_index];
+
     }
 
     return notches.size();
@@ -186,9 +186,11 @@ void Rotor::print_rotor(){
       }
       
     }
+    /*
     cout << endl;
     cout << "rotations " << number_of_rotations;
     cout << endl;
+    */
   }
 
 Enigma::Enigma(int number_of_files, char **files){
@@ -199,7 +201,7 @@ Enigma::Enigma(int number_of_files, char **files){
     int rotor_count = number_of_files - 4;
     int rotor_starting_positions[rotor_count];
     
-    load_data(files[number_of_files - 2], rotor_starting_positions);
+    load_data(files[number_of_files - 1], rotor_starting_positions);
     
     for(int i = number_of_files - 2; i > 2; i--){
       

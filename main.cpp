@@ -49,16 +49,7 @@ int main(int argc, char** argv){
 
   }
  
-  
-  for(auto i = 0u; i < message.size(); i++){
-
-    cout << endl << message[i] << endl;
-
-  }
-
-
-  /*
-  vector<char> message = {'A','C','Z'};
+    
   auto machine = Enigma(argc, argv);
 
 
@@ -66,11 +57,13 @@ int main(int argc, char** argv){
   
   for(auto char_index = 0u; char_index < message.size(); char_index++){
     
-    cout << message[char_index] << endl;
+    cout << message[char_index];
 
   }
 
-          
+  cout << endl;
+
+  /*        
   for(int i = 0; i < argc - 5; i++){
     machine.rotors[i].print_rotor();
   }
@@ -81,5 +74,5 @@ int main(int argc, char** argv){
   machine.plug_board.print_plug_board();
   cout << endl;
   */
-  return 0;
+  return NO_ERROR;
 }
