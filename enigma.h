@@ -2,7 +2,7 @@
 #define ENIGMA_H
 
 #include<vector>
-
+#include"error_handler.h"
 
 constexpr int NUM_LETTERS = 26;
 constexpr int MAX_FILE_NUMBER = 80;
@@ -68,8 +68,8 @@ public:
 };
 
 class Enigma{
-  
-  char message[MAX_WORD_LENGTH];
+  Error_handler error_handler;
+  bool rotor_exists = false;
   
   
 public:

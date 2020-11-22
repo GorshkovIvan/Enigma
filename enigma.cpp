@@ -2,6 +2,8 @@
 #include<fstream>
 #include<vector>
 #include"enigma.h"
+#include"error_handler.h"
+
 using namespace std;
 
 int load_data(const char* filename, int wiring[]){
@@ -191,28 +193,37 @@ void Rotor::print_rotor(){
     cout << "rotations " << number_of_rotations;
     cout << endl;
     */
-  }
+}
 
 Enigma::Enigma(int number_of_files, char **files){
    
     plug_board.setup_plug_board(files[1]);
     reflector.setup_reflector(files[2]);
 
-    int rotor_count = number_of_files - 4;
-    int rotor_starting_positions[rotor_count];
-    
-    load_data(files[number_of_files - 1], rotor_starting_positions);
-    
-    for(int i = number_of_files - 2; i > 2; i--){
+    if(error_handler.recognise_parameter(files[3]) == 2){
       
-      rotors.push_back(Rotor(files[i], rotor_starting_positions[rotor_count - 1]));
-      rotor_count --;
+      int rotor_count = number_of_files - 4;
+      int rotor_starting_positions[rotor_count];
+    
+      load_data(files[number_of_files - 1], rotor_starting_positions);
+    
+      for(int i = number_of_files - 2; i > 2; i--){
       
+	rotors.push_back(Rotor(files[i], rotor_starting_positions[rotor_count - 1]));
+	rotor_count --;
+
+	rotor_exists = true;
     }
-  }
+
+    }
+}
 int Enigma::encrypt_character(int char_number){
 
-   rotate_rotors();
+  if(rotor_exists){
+  
+    rotate_rotors();
+
+  }
    
   //  cout << "pb output" << endl;
   int encrypted_char_number = plug_board.encrypt(char_number);
@@ -223,6 +234,8 @@ int Enigma::encrypt_character(int char_number){
       cout << "rotors output";
       cout << endl;
   */
+  if(rotor_exists){
+    
       for(auto rotor_number = 0u; rotor_number < rotors.size(); rotor_number++){
 	
 	encrypted_char_number = rotors[rotor_number].encrypt_forwards(encrypted_char_number);
@@ -232,6 +245,8 @@ int Enigma::encrypt_character(int char_number){
 	cout << endl;
 	*/  
       }
+
+  }
       /*
       cout << "reflector output" << endl;
       */
@@ -242,19 +257,21 @@ int Enigma::encrypt_character(int char_number){
       cout << "rotors output";
       cout << endl;
       */
-      for(int rotor_number = rotors.size()-1; rotor_number >= 0; rotor_number--){
+
+      if(rotor_exists){
+	for(int rotor_number = rotors.size()-1; rotor_number >= 0; rotor_number--){
 	
-	encrypted_char_number = rotors[rotor_number].encrypt_backwards(encrypted_char_number);
+	  encrypted_char_number = rotors[rotor_number].encrypt_backwards(encrypted_char_number);
 	/*
 	cout << endl;
 	cout << encrypted_char_number;
 	cout << endl;
 	*/  
+	}
       }
-     
       return plug_board.encrypt(encrypted_char_number);
      
-    }
+}
   
 bool Enigma::rotate_one_rotor(int right_rotor_position, int left_rotor_position){
   

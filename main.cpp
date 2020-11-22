@@ -9,10 +9,9 @@ using namespace std;
 
 int main(int argc, char** argv){
    
-  vector<char>  message;
+  vector<char> message;
   char ch;
   int error_code;
-  
   Error_handler error_handler;
 
   error_code = error_handler.check_parameters(argc, argv);
@@ -61,7 +60,6 @@ int main(int argc, char** argv){
 
   }
 
-  cout << endl;
 
   /*        
   for(int i = 0; i < argc - 5; i++){
