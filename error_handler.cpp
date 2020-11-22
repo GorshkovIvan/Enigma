@@ -103,7 +103,14 @@ int Error_handler::check_plugboard(const char* filename){
 
   int plugboard[NUM_LETTERS];
   int count = load_data(filename, plugboard);
+  
+  if(count == -1){
 
+    cerr << "Non-numeric character in plugboard file " << filename; 
+    return NON_NUMERIC_CHARACTER;
+
+  }
+  
   if(count % 2 != 0){
 
     cerr << "INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS (6)" << endl;
@@ -150,7 +157,14 @@ int Error_handler::check_reflector(const char* filename){
 
   int reflector[NUM_LETTERS];
   int count = load_data(filename, reflector);
+      
+  if(count == -1){
 
+    cerr << "Non-numeric character in reflector file " << filename; 
+    return NON_NUMERIC_CHARACTER;
+
+  }
+ 
   if(count  != NUM_LETTERS ){
 
     cerr << "INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS (10)" << endl;

@@ -3,6 +3,8 @@
 #include<vector>
 #include"enigma.h"
 #include"error_handler.h"
+#include"errors.h"
+
 
 using namespace std;
 
@@ -10,19 +12,44 @@ int load_data(const char* filename, int wiring[]){
   
   
   ifstream in_stream;
-
+  string input;
+  char ch;
+  
   in_stream.open(filename);
   if(!in_stream){
     cout << "Failed!" << '\n';
    }
+  
+  while(!in_stream.eof()){
+    
+    in_stream >> ch;
+
+    if(!(isdigit(ch))){
+      cout << "FAILED";
+      in_stream.close();
+      return -1;
+       
+     }
+  }
+    
+  in_stream.close();
+
+  in_stream.open(filename);
+  
+  if(!in_stream){
+    cout << "Failed!" << '\n';
+   }
+
   int count = 0;
   
   while(!in_stream.eof()){
-     in_stream >> wiring[count];
-     count++;
-   }
-  in_stream.close();
 
+    in_stream >> wiring[count];
+
+    count++;
+  }
+
+ 
   return count-1;
   
 }
