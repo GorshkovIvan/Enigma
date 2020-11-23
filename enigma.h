@@ -8,6 +8,7 @@ constexpr int NUM_LETTERS = 26;
 
 int load_data(const char* filename, int wiring[]);
 int load_data_rotors(const char* filename, int wiring[]);
+int load_data_starting_positions(const char* filename, int positions[]);
 
 /*Plugboard class replicates the functionality of Enigma plugboard. */
 

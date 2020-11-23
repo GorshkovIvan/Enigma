@@ -45,9 +45,16 @@ int main(int argc, char** argv){
       return error_code;
     
     file_position ++;
+   
+  }
+
+  error_code = error_handler.check_starting_positions(argv[file_position], file_position - 3);
+  if(error_code != 0){
+
+    return error_code;
 
   }
-    
+  
   while(cin >> ws >> ch){
 
     error_code = error_handler.check_character(ch);

@@ -104,7 +104,14 @@ int Error_handler::check_plugboard(const char* filename){
   
   int plugboard[NUM_LETTERS];
   int count = load_data(filename, plugboard);
+  
+  if(count == -11){
+    
+    cerr << "Can't open plugboard file " << filename;
+    return ERROR_OPENING_CONFIGURATION_FILE;
 
+  }
+  
   if(count == -4){
 
     cerr << "Non-numeric character in plugboard file " << filename;
@@ -140,7 +147,14 @@ int Error_handler::check_reflector(const char* filename){
 
   int reflector[NUM_LETTERS];
   int count = load_data(filename, reflector);
- 
+
+   if(count == -11){
+     
+    cerr << "Can't open reflector file " << filename;
+    return ERROR_OPENING_CONFIGURATION_FILE;
+
+   }
+  
   if(count == -4){
 
     cerr << "Non-numeric character in reflector file " << filename;
@@ -185,8 +199,6 @@ int Error_handler::check_reflector(const char* filename){
     
   }
   
-
-
   
   return NO_ERROR;
 
@@ -196,7 +208,15 @@ int Error_handler::check_rotor(const char* filename){
 
   int wiring_and_notches[NUM_LETTERS*2];
   int count = load_data_rotors(filename, wiring_and_notches);
+
+   if(count == -11){
+     
+    cerr << "Can't open rotor file " << filename;
+    return ERROR_OPENING_CONFIGURATION_FILE;
+
+  }
  
+  
   if(count == -4){
 
     cerr << "Non-numeric character in rotor file " << filename;
@@ -226,4 +246,49 @@ int Error_handler::check_rotor(const char* filename){
 
   return NO_ERROR;
 
+}
+
+int Error_handler::check_starting_positions(const char* filename, int number_of_rotors){
+
+  int positions[number_of_rotors];
+  int count = load_data_starting_positions(filename, positions);
+
+   if(count == -11){
+     
+    cerr << "Can't open rotor starting positions file " << filename;
+    return ERROR_OPENING_CONFIGURATION_FILE;
+
+  } 
+  
+  if(count == -4){
+
+    cerr << "Non-numeric character in rotor positions file " << filename;
+    return NON_NUMERIC_CHARACTER;
+    
+  }
+
+  if(count == -3){
+
+    cerr << "There is a number that is not between 0 and 25 in rotor position file " << filename; 
+    return INVALID_INDEX;
+    
+  }
+
+  if(count >= 0 && count < number_of_rotors){
+    
+    cerr << "No starting position for rotor ";
+    
+    for(int i = 0; i < (number_of_rotors - count); i++){
+
+      cerr << i << ", "; 
+
+      }
+    
+    cerr << "in rotor position file " << filename;
+      
+    return NO_ROTOR_STARTING_POSITION;
+
+  }
+
+  return NO_ERROR;
 }

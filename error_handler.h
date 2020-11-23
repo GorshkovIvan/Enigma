@@ -11,6 +11,7 @@ public:
   int check_plugboard(const char* filename);
   int check_reflector(const char* filename);
   int check_rotor(const char* filename);
+  int check_starting_positions(const char* filename, int number_of_rotors);
   
 };
 

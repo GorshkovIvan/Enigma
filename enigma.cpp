@@ -18,7 +18,7 @@ int load_data(const char* filename, int wiring[]){
   
   in_stream.open(filename);
   if(!in_stream){
-    cout << "Failed!" << '\n';
+    return -11;
   }
   
   while(in_stream >> input){
@@ -77,11 +77,19 @@ int load_data_rotors(const char* filename, int wiring[]){
   
   in_stream.open(filename);
   if(!in_stream){
-    cout << "Failed!" << '\n';
+    return -11;
   }
   
   while(in_stream >> input){
     
+     if(count ==  NUM_LETTERS*2){
+      
+      in_stream.close();
+      cerr << "Too many parameters";
+      return INVALID_ROTOR_MAPPING;
+      
+    }
+
     for(auto i = 0u; i < input.length(); i++){
       
       if(!(isdigit(input[i]))){
@@ -119,6 +127,51 @@ int load_data_rotors(const char* filename, int wiring[]){
 
   in_stream.close();
 
+  return count;
+  
+}
+
+int load_data_starting_positions(const char* filename, int positions[]){
+    
+  ifstream in_stream;
+  string input;
+  int count = 0;
+  
+  in_stream.open(filename);
+  if(!in_stream){
+    return -11;
+  }
+  
+  while(in_stream >> input){
+    
+    for(auto i = 0u; i < input.length(); i++){
+      
+      if(!(isdigit(input[i]))){
+	
+	in_stream.close();
+	return -4;
+   
+      }
+    }
+
+    stringstream ss(input);
+    
+    ss >> positions[count];
+    if(positions[count] > 25 || positions[count] < 0){
+      
+      in_stream.close();
+      return -3;
+      
+    }
+    
+    ss.str("");
+	
+    count++;
+    
+  }
+
+  in_stream.close();
+  
   return count;
   
 }
@@ -233,6 +286,7 @@ int Rotor::encrypt_backwards(int digit){
   
   digit = (digit + number_of_rotations) % NUM_LETTERS;
   digit = (NUM_LETTERS + (wiring[digit][0] - (number_of_rotations % NUM_LETTERS))) % NUM_LETTERS;
+  
   return digit;
     
 }
@@ -261,22 +315,7 @@ int Rotor::get_notches(int notches_array[]){
     
 }
 
-  
-void Rotor::print_rotor(){
-  
-  for(int i = 0; i < NUM_LETTERS; i++){
-    cout << endl;
-    for(int j = 0; j < 2; j++){
-      cout << wiring[i][j] << "  ";
-    }
-    
-  }
-    /*
-    cout << endl;
-    cout << "rotations " << number_of_rotations;
-    cout << endl;
-    */
-}
+
 
 Enigma::Enigma(int number_of_files, char **files){    //constructor
    
@@ -288,7 +327,7 @@ Enigma::Enigma(int number_of_files, char **files){    //constructor
     int rotor_count = number_of_files - 4;
     int rotor_starting_positions[rotor_count];
     
-    load_data_rotors(files[number_of_files - 1], rotor_starting_positions);
+    load_data_starting_positions(files[number_of_files - 1], rotor_starting_positions);
     
     for(int i = number_of_files - 2; i > 2; i--){
       
