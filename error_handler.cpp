@@ -42,12 +42,12 @@ int Error_handler::check_parameters(int argc, char** argv){
 
   if(plugboard_counter == 1 && reflector_counter == 1 && positions_counter == 1){
     
-    return 0;
+    return NO_ERROR;
     
   }else{
 
     cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << endl;
-    return 1;
+    return INSUFFICIENT_NUMBER_OF_PARAMETERS;
 
   }
   
@@ -82,20 +82,28 @@ int Error_handler::recognise_parameter(const char* filename){
 
     return 4;
 
-  return 0;
+  return NO_ERROR;
 
 }
 
-int Error_handler::check_character(char ch){
+int Error_handler::check_character(char &ch){
 
   if(ch < 65 || ch > 90){
 
+    if(ch > 47 && ch < 58)
+      ch = ch + 17;
+    
+    
+    if(ch > 96 && ch < 123)
+      ch = ch - 32;
+    
+    
     cerr << ch << " is not a valid input character (input characters must be upper case letters A-Z)!";
-    return 2;
+    return INVALID_INPUT_CHARACTER;
 
   }
 
-  return 0;
+  return NO_ERROR;
 
 }
 
@@ -161,40 +169,31 @@ int Error_handler::check_reflector(const char* filename){
   }
  
   if(count  != NUM_LETTERS || count == -610){
-    if((count < NUM_LETTERS) && ((count % 2) == 0)){
+    
+    if((count < NUM_LETTERS) && ((count % 2) == 0) && count != -610){
+      
       cerr << "Insufficient number of mappings in reflector file " << filename;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+      
     }
+    
     if(count %2 != 0){
+      
       cerr << "Incorrect (odd) number of parameters in reflector file " << filename;
+      
     }else{
 
       cerr << "Incorrect number of parameters in reflector file " << filename;
       
     }
+    
     return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     
   }
+  
 
-  for(int i = 0; i < count; i = i + 2){
-
-    if(reflector[i] == reflector[i+1]){
-
-      cerr << "INVALID_REFLECTOR_MAPPING (9)";
-      return 9;
-
-    }
-
-    if((reflector[i] < 0 || reflector[i] > 25) || (reflector[i+1] < 0 || reflector[i+1] > 25)){
-
-      cerr << "INVALID_INDEX (3)" << endl;
-      return 3;
-      
-    }
-
-  }
 
   
-  return 0;
+  return NO_ERROR;
 
 }
