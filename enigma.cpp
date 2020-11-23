@@ -4,7 +4,8 @@
 #include"enigma.h"
 #include"error_handler.h"
 #include"errors.h"
-
+#include<string>
+#include<sstream>
 
 using namespace std;
 
@@ -13,44 +14,50 @@ int load_data(const char* filename, int wiring[]){
   
   ifstream in_stream;
   string input;
-  char ch;
-  
-  in_stream.open(filename);
-  if(!in_stream){
-    cout << "Failed!" << '\n';
-   }
-  
-  while(!in_stream.eof()){
-    
-    in_stream >> ch;
-
-    if(!(isdigit(ch))){
-      cout << "FAILED";
-      in_stream.close();
-      return -1;
-       
-     }
-  }
-    
-  in_stream.close();
-
-  in_stream.open(filename);
-  
-  if(!in_stream){
-    cout << "Failed!" << '\n';
-   }
-
   int count = 0;
   
-  while(!in_stream.eof()){
+  
+  in_stream.open(filename);
+  if(!in_stream){
+    cout << "Failed!" << '\n';
+   }
+  
+  while(in_stream >> input){
+    
+    for(auto i = 0u; i < input.length(); i++){
+      
+      if(!(isdigit(input[i]))){
+	in_stream.close();
+	return -4;
+   
+     }
+    }
 
-    in_stream >> wiring[count];
-
+    stringstream ss(input);
+    ss >> wiring[count];
+    if(wiring[count] > 25 || wiring[count] < 0){
+      in_stream.close();
+      return -3;
+    }
+    
+    ss.str("");
     count++;
+    if(count > 1){
+      for(int i = 0; i < count-1; i++){
+	for(int j = 1; j < count - i; j++){
+	  if(wiring[i] == wiring[i+j]){
+	    in_stream.close();
+	    return -59;
+	    
+	  }
+	}
+      }
+    }
   }
 
- 
-  return count-1;
+  in_stream.close();
+
+  return count;
   
 }
 

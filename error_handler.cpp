@@ -103,50 +103,32 @@ int Error_handler::check_plugboard(const char* filename){
 
   int plugboard[NUM_LETTERS];
   int count = load_data(filename, plugboard);
+
+  if(count == -4){
+
+    cerr << "Non-numeric character for mapping in plugboard file: " << filename;
+    return INVALID_INDEX;
+  }
+ 
+  if(count == -59){
+    
+      cerr << "IMPOSSIBLE_PLUGBOARD_CONFIGURATION (5)";
+      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+  } 
+
   
-  if(count == -1){
+  if(count == -4){
 
     cerr << "Non-numeric character in plugboard file " << filename; 
     return NON_NUMERIC_CHARACTER;
 
   }
-  
-  if(count % 2 != 0){
 
-    cerr << "INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS (6)" << endl;
+  if(count % 2 != 0){
+    
+    cerr << "Incorrect number of parameters in plugboard file: "<< filename  << endl;
     return 6;
     
-  }
-
-  for(int i = 0; i < count; i = i + 2){
-
-    if(plugboard[i] == plugboard[i+1]){
-
-      cerr << "IMPOSSIBLE_PLUGBOARD_CONFIGURATION (5)";
-      return 5;
-
-    }
-
-    if((plugboard[i] < 0 || plugboard[i] > 25) || (plugboard[i+1] < 0 || plugboard[i+1] > 25)){
-
-      cerr << "INVALID_INDEX (3)" << endl;
-      return 3;
-      
-    }
-
-  }
-
-  for(int i = 0; i < count - 1; i++){
-
-    for(int j = i + 1; j < count; j++){
-
-      if(plugboard[i] == plugboard[j]){
-	
-      cerr << "IMPOSSIBLE_PLUGBOARD_CONFIGURATION (5)";
-      return 5;
-
-      } 
-    }
   }
   
   return 0;
@@ -157,8 +139,21 @@ int Error_handler::check_reflector(const char* filename){
 
   int reflector[NUM_LETTERS];
   int count = load_data(filename, reflector);
-      
-  if(count == -1){
+ 
+  if(count == -4){
+
+    cerr << "Non-numeric character for mapping in reflector file: " << filename;
+    return INVALID_INDEX;
+    
+  }
+  
+  if(count == -59){
+    
+    cerr << "Incrorrect reflector mapping in file " << filename;
+    return INVALID_REFLECTOR_MAPPING;
+  }
+
+  if(count == -4){
 
     cerr << "Non-numeric character in reflector file " << filename; 
     return NON_NUMERIC_CHARACTER;
@@ -166,9 +161,14 @@ int Error_handler::check_reflector(const char* filename){
   }
  
   if(count  != NUM_LETTERS ){
-
-    cerr << "INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS (10)" << endl;
-    return 10;
+    if((count < NUM_LETTERS) && (count % 2 != 0)){
+      cerr << "Insufficient number of mappings in reflector file " << filename;
+      return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+    }
+    if(count %2 != 0){
+      cerr << "Incorrect (odd) number of parameters in reflector file " << filename;
+    }
+    return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     
   }
 
@@ -190,18 +190,6 @@ int Error_handler::check_reflector(const char* filename){
 
   }
 
-  for(int i = 0; i < count - 1; i++){
-
-    for(int j = i + 1; j < count; j++){
-
-      if(reflector[i] == reflector[j]){
-	
-	cerr << "IMPOSSIBLE_REFLECTOR_CONFIGURATION (5)";
-	return 5;
-
-      } 
-    }
-  }
   
   return 0;
 
