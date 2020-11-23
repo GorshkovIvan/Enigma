@@ -40,18 +40,16 @@ int main(int argc, char** argv){
   while(cin >> ws >> ch){
 
     error_code = error_handler.check_character(ch);
-    
+
     if(error_code != 0){
       
-      int int_or_small_char = error_handler.check_character(ch);
+      break;
       
-      if(int_or_small_char != 0)
-	return error_code;
-
-    }
+    }else{
 
     message.push_back(ch);
     
+    }
   }
 
           

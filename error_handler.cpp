@@ -62,9 +62,9 @@ int Error_handler::recognise_parameter(const char* filename){
     char_count++;
 
   }
-
+  
   if(filename[char_count - 3] == '.' && filename[char_count - 2] == 'p' && filename[char_count - 1] == 'b')
-
+    
     return 1;
 
 
@@ -90,25 +90,18 @@ int Error_handler::check_character(char &ch){
 
   if(ch < 65 || ch > 90){
 
-    if(ch > 47 && ch < 58)
-      ch = ch + 17;
-    
-    
-    if(ch > 96 && ch < 123)
-      ch = ch - 32;
-    
-    
-    cerr << ch << " is not a valid input character (input characters must be upper case letters A-Z)!";
+    cerr << ch <<" is not a valid input character (input characters must be upper case letters A-Z)!";
+
     return INVALID_INPUT_CHARACTER;
 
   }
 
   return NO_ERROR;
-
+  
 }
 
 int Error_handler::check_plugboard(const char* filename){
-
+  
   int plugboard[NUM_LETTERS];
   int count = load_data(filename, plugboard);
 
@@ -117,7 +110,7 @@ int Error_handler::check_plugboard(const char* filename){
     cerr << "Non-numeric character in plugboard file " << filename;
     return NON_NUMERIC_CHARACTER;
   }
- 
+  
   if(count == -59){
     
     cerr << "Incorrect number of parameters in plugboard file " << filename;
@@ -139,7 +132,7 @@ int Error_handler::check_plugboard(const char* filename){
     
   }
   
-  return 0;
+  return NO_ERROR;
 
 }
 
@@ -159,16 +152,17 @@ int Error_handler::check_reflector(const char* filename){
     
     cerr << "Incrorrect reflector mapping in file " << filename;
     return INVALID_REFLECTOR_MAPPING;
+    
   }
-
+  
   if(count == -3){
 
     cerr << "There is a number that is not between 0 and 25 in reflector file " << filename; 
     return INVALID_INDEX;
-
+    
   }
  
-  if(count  != NUM_LETTERS || count == -610){
+  if(count != NUM_LETTERS || count == -610){
     
     if((count < NUM_LETTERS) && ((count % 2) == 0) && count != -610){
       
