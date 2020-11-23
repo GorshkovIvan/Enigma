@@ -9,8 +9,8 @@ constexpr int MAX_FILE_NUMBER = 80;
 constexpr int MAX_WORD_LENGTH = 80;
 
 int load_data(const char* filename, int wiring[]);
+int load_data_rotors(const char* filename, int wiring[]);
 
-void read_message(const char* filename, char message[]);
 
 class Plug_board{
   int wiring[NUM_LETTERS];

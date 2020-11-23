@@ -143,7 +143,7 @@ int Error_handler::check_reflector(const char* filename){
  
   if(count == -4){
 
-    cerr << "Non-numeric character in reflector file: " << filename;
+    cerr << "Non-numeric character in reflector file " << filename;
     return NON_NUMERIC_CHARACTER;
     
   }
@@ -188,6 +188,42 @@ int Error_handler::check_reflector(const char* filename){
 
 
   
+  return NO_ERROR;
+
+}
+
+int Error_handler::check_rotor(const char* filename){
+
+  int wiring_and_notches[NUM_LETTERS*2];
+  int count = load_data_rotors(filename, wiring_and_notches);
+ 
+  if(count == -4){
+
+    cerr << "Non-numeric character in rotor file " << filename;
+    return NON_NUMERIC_CHARACTER;
+    
+  }
+
+  if(count == -3){
+
+    cerr << "There is a number that is not between 0 and 25 in rotor file " << filename; 
+    return INVALID_INDEX;
+    
+  }
+
+  if(count == -7){
+
+    return INVALID_ROTOR_MAPPING;
+
+  }
+
+  if(count > 0 && count < NUM_LETTERS){
+
+    cerr << "Not all inputs mapped in rotor file " << filename;
+    return INVALID_ROTOR_MAPPING;
+
+  }
+
   return NO_ERROR;
 
 }

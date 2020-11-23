@@ -34,8 +34,19 @@ int main(int argc, char** argv){
     return error_code; 
 
   }
- 
 
+  int file_position = 3;
+  
+  while(error_handler.recognise_parameter(argv[file_position]) == 2){
+
+    error_code = error_handler.check_rotor(argv[file_position]);
+    
+    if(error_code != 0)
+      return error_code;
+    
+    file_position ++;
+
+  }
     
   while(cin >> ws >> ch){
 

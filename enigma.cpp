@@ -99,6 +99,20 @@ int load_data_rotors(const char* filename, int wiring[]){
     }
     
     ss.str("");
+
+    if(count > 1 && count < NUM_LETTERS){
+      for(int i = 0; i < count-1; i++){
+	for(int j = 1; j < count - i -1; j++){
+	  if(wiring[i] == wiring[i+j]){
+	    cerr << "Invalid mapping of input " << i+j << " to output " << wiring[i+j] << " (output " << wiring[i+j] << " is already mapped to from input) " << i << " in " << filename;
+	    in_stream.close();
+	    return -7;
+	    
+	  }
+	}
+      }
+    }
+	
     count++;
     
   }
