@@ -1,5 +1,5 @@
 enigma: main.o enigma.o error_handler.o data_handler.o
-	g++ -g main.o enigma.o error_handler.o -o enigma
+	g++ -g main.o enigma.o error_handler.o data_handler.o -o enigma
 
 main.o: main.cpp enigma.h error_handler.h errors.h
 	g++ -Wall -g -c main.cpp
