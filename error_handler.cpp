@@ -106,7 +106,7 @@ int Error_handler::check_plugboard(const char* filename){
 
   if(count == -4){
 
-    cerr << "Non-numeric character for mapping in plugboard file: " << filename;
+    cerr << "Non-numeric character in plugboard file: " << filename;
     return INVALID_INDEX;
   }
  
@@ -142,7 +142,7 @@ int Error_handler::check_reflector(const char* filename){
  
   if(count == -4){
 
-    cerr << "Non-numeric character for mapping in reflector file: " << filename;
+    cerr << "Non-numeric character in reflector file: " << filename;
     return INVALID_INDEX;
     
   }
