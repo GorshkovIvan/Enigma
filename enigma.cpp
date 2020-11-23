@@ -10,8 +10,7 @@
 using namespace std;
 
 int load_data(const char* filename, int wiring[]){
-  
-  
+    
   ifstream in_stream;
   string input;
   int count = 0;
@@ -53,6 +52,47 @@ int load_data(const char* filename, int wiring[]){
 	}
       }
     }
+  }
+
+  in_stream.close();
+
+  return count;
+  
+}
+
+int load_data_rotors(const char* filename, int wiring[]){
+    
+  ifstream in_stream;
+  string input;
+  int count = 0;
+  
+  
+  in_stream.open(filename);
+  if(!in_stream){
+    cout << "Failed!" << '\n';
+   }
+  
+  while(in_stream >> input){
+    
+    for(auto i = 0u; i < input.length(); i++){
+      
+      if(!(isdigit(input[i]))){
+	in_stream.close();
+	return -4;
+   
+     }
+    }
+
+    stringstream ss(input);
+    ss >> wiring[count];
+    if(wiring[count] > 25 || wiring[count] < 0){
+      in_stream.close();
+      return -3;
+    }
+    
+    ss.str("");
+    count++;
+    
   }
 
   in_stream.close();
@@ -153,7 +193,7 @@ Rotor::Rotor(const char* filename, int starting_position){
     int wiring_and_notches[NUM_LETTERS*2];
     int number_of_data_elements;
     
-    number_of_data_elements = load_data(filename, wiring_and_notches);
+    number_of_data_elements = load_data_rotors(filename, wiring_and_notches);
     
     for(int i = 0; i < NUM_LETTERS; i++){
       
