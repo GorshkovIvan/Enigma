@@ -19,21 +19,24 @@ int load_data(const char* filename, int wiring[]){
   
   in_stream.open(filename);
   if(!in_stream){
-    return -11;
+    
+    return -11;                               
+    
   }
   
   while(in_stream >> input){
 
-    if(count ==  NUM_LETTERS){
+    if(count ==  NUM_LETTERS){                //checks if there are too many parameters
       
       in_stream.close();
-      return -610;
+      return -610;               
       
     }
 
     for(auto i = 0u; i < input.length(); i++){ //checks whether input is an integer
       
       if(!(isdigit(input[i]))){
+	
 	in_stream.close();
 	return -4;
 	
@@ -50,10 +53,14 @@ int load_data(const char* filename, int wiring[]){
     ss.str("");
        
     count++;
-    if(count > 1){                               //searches for duplicates 
+    if(count > 1){                              //searches for duplicates 
+
       for(int i = 0; i < count-1; i++){
+	
 	for(int j = 1; j < count - i; j++){
+	  
 	  if(wiring[i] == wiring[i+j]){
+	    
 	    in_stream.close();
 	    return -59;
 	    
@@ -79,12 +86,14 @@ int load_data_rotors(const char* filename, int wiring[]){
   
   in_stream.open(filename);
   if(!in_stream){
+    
     return -11;
+    
   }
   
   while(in_stream >> input){
     
-     if(count ==  NUM_LETTERS*2){
+    if(count ==  NUM_LETTERS*2){               //checks if there are too many parameters;
       
       in_stream.close();
       cerr << "Too many parameters";
@@ -95,6 +104,7 @@ int load_data_rotors(const char* filename, int wiring[]){
     for(auto i = 0u; i < input.length(); i++){  //Checks whether input is an integer
       
       if(!(isdigit(input[i]))){
+	
 	in_stream.close();
 	return -4;
    
@@ -103,19 +113,27 @@ int load_data_rotors(const char* filename, int wiring[]){
 
     stringstream ss(input);
     ss >> wiring[count];
+    
     if(wiring[count] > 25 || wiring[count] < 0){  //Checks that whether input is in range 
+
       in_stream.close();
       return -3;
+      
     }
     
     ss.str("");
 
     if(count > 1 && count < NUM_LETTERS){          //Searches for duplicates
+
       for(int i = 0; i < count-1; i++){
+
 	for(int j = 1; j < count - i -1; j++){
+
 	  if(wiring[i] == wiring[i+j]){
+
 	    cerr << "Invalid mapping of input " << i+j << " to output " << wiring[i+j] << " (output " << wiring[i+j] << " is already mapped to from input) " << i << " in " << filename;
 	    in_stream.close();
+
 	    return -7;
 	    
 	  }
@@ -141,7 +159,9 @@ int load_data_starting_positions(const char* filename, int positions[]){
   int count = 0;
   
   in_stream.open(filename);
+  
   if(!in_stream){
+    
     return -11;
   }
   

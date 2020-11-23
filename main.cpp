@@ -14,6 +14,8 @@ int main(int argc, char** argv){
   int error_code;
   Error_handler error_handler;
 
+  /*Testing Errors*/
+  
   error_code = error_handler.error_testing(argc, argv);
 
   if(error_code != NO_ERROR){
@@ -21,6 +23,8 @@ int main(int argc, char** argv){
     return error_code;
 
   }
+
+  /*Getting user input and checking its validity. */
   
   while(cin >> ws >> ch){
 
@@ -37,10 +41,15 @@ int main(int argc, char** argv){
     }
   }
 
-          
+  /*Creating Enigma and initialising its components with input files. */
+  
   auto machine = Enigma(argc, argv);
 
+  /*Encrypting a message by passing it by reference. */
+  
   machine.encrypt_message(message);
+
+  /*Printing message*/
   
   for(auto char_index = 0u; char_index < message.size(); char_index++){
       

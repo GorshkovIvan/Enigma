@@ -301,6 +301,7 @@ int Error_handler::check_starting_positions(const char* filename, int number_of_
   return NO_ERROR;
 }
 
+/*Runs test */
 int Error_handler:: error_testing(int argc, char **argv){
 
   int error_code;
