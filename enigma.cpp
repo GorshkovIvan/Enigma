@@ -63,7 +63,7 @@ int load_data(const char* filename, int wiring[]){
   }
 
   in_stream.close();
-  cout << endl << count << endl;
+
   return count;
   
 }

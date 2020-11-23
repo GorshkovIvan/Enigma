@@ -161,7 +161,7 @@ int Error_handler::check_reflector(const char* filename){
   }
  
   if(count  != NUM_LETTERS || count == -610){
-    if((count < NUM_LETTERS) && (count % 2 = 0)){
+    if((count < NUM_LETTERS) && ((count % 2) == 0)){
       cerr << "Insufficient number of parameters in reflector file " << filename;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
