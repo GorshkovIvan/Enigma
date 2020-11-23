@@ -13,6 +13,7 @@ int Error_handler::check_parameters(int argc, char** argv){
   int reflector_counter = 0;
   int positions_counter = 0;
   
+  /*Adds one a variable above if the file was found*/
   for(int file_position = 1; file_position < argc; file_position++){
 
     switch(recognise_parameter(argv[file_position])){
@@ -22,7 +23,7 @@ int Error_handler::check_parameters(int argc, char** argv){
 	 return 11;
 
        case 1:
-	 plugboard_counter++;
+	 plugboard_counter++; 
 	 break;
 
        case 2:
@@ -40,7 +41,7 @@ int Error_handler::check_parameters(int argc, char** argv){
     
   }
 
-
+  /*Return NO_ERROR if plugboard, reflector and position files were found.*/
   if(plugboard_counter == 1 && reflector_counter == 1 && positions_counter == 1){
     
     return NO_ERROR;
@@ -58,6 +59,7 @@ int Error_handler::recognise_parameter(const char* filename){
 
   int char_count = 0;
 
+  /*Checks file name endings to recognise files.*/
   while(filename[char_count] != '\0'){
 
     char_count++;
@@ -89,6 +91,7 @@ int Error_handler::recognise_parameter(const char* filename){
 
 int Error_handler::check_character(char &ch){
 
+  /*Checks whether a character is a capital letter using ASCII code"*/
   if(ch < 65 || ch > 90){
 
     cerr << ch <<" is not a valid input character (input characters must be upper case letters A-Z)!";
@@ -101,12 +104,13 @@ int Error_handler::check_character(char &ch){
   
 }
 
+/*Uses output of a function stored in count to catch errors in plugboard file. */
 int Error_handler::check_plugboard(const char* filename){
   
   int plugboard[NUM_LETTERS];
-  int count = load_data(filename, plugboard);
-  
-  if(count == -11){
+  int count = load_data(filename, plugboard); // returns a negative number if an error was caught, returns a positive number equal to the number of gathered digits,
+                                              // if there was no error. All other member functions in this class work in a similar fashion.  
+  if(count == -11){                          
     
     cerr << "Can't open plugboard file " << filename;
     return ERROR_OPENING_CONFIGURATION_FILE;
@@ -144,6 +148,7 @@ int Error_handler::check_plugboard(const char* filename){
 
 }
 
+/*Uses output of a function stored in count to catch errors in reflector file. */
 int Error_handler::check_reflector(const char* filename){
 
   int reflector[NUM_LETTERS];
@@ -205,6 +210,7 @@ int Error_handler::check_reflector(const char* filename){
 
 }
 
+/*Uses output of a function stored in count to catch errors in rotor files. */
 int Error_handler::check_rotor(const char* filename){
 
   int wiring_and_notches[NUM_LETTERS*2];
@@ -249,6 +255,7 @@ int Error_handler::check_rotor(const char* filename){
 
 }
 
+/*Uses output of a function stored in count to catch errors in starting positions file. */
 int Error_handler::check_starting_positions(const char* filename, int number_of_rotors){
 
   int positions[number_of_rotors];
@@ -292,4 +299,56 @@ int Error_handler::check_starting_positions(const char* filename, int number_of_
   }
 
   return NO_ERROR;
+}
+
+int Error_handler:: error_testing(int argc, char **argv){
+
+  int error_code;
+
+  error_code = check_parameters(argc, argv);
+
+  if(error_code != 0){
+    
+    return error_code;
+    
+  }
+
+  error_code = check_plugboard(argv[1]);
+
+  if(error_code != 0){
+    
+    return error_code;
+    
+  }
+
+  error_code = check_reflector(argv[2]);
+
+  if(error_code != 0){
+    
+    return error_code;
+    
+  }
+  
+  int file_position = 3;
+
+  while(recognise_parameter(argv[file_position]) == 2){
+
+    error_code = check_rotor(argv[file_position]);
+
+    if(error_code != 0)
+      return error_code;
+
+    file_position++;
+
+  }
+
+  error_code = check_starting_positions(argv[file_position], file_position - 3);
+  if(error_code != 0){
+
+    return error_code;
+
+  }
+
+  return NO_ERROR;
+
 }

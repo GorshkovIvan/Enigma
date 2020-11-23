@@ -14,42 +14,9 @@ int main(int argc, char** argv){
   int error_code;
   Error_handler error_handler;
 
-  error_code = error_handler.check_parameters(argc, argv);
-  if(error_code != 0){
-    
-    return error_code; 
+  error_code = error_handler.error_testing(argc, argv);
 
-  }
-
-  error_code =  error_handler.check_plugboard(argv[1]);
-  if(error_code != 0){
-    
-    return error_code; 
-
-  }
-
-  error_code = error_handler.check_reflector(argv[2]);
-  if(error_code != 0){
-    
-    return error_code; 
-
-  }
-
-  int file_position = 3;
-  
-  while(error_handler.recognise_parameter(argv[file_position]) == 2){
-
-    error_code = error_handler.check_rotor(argv[file_position]);
-    
-    if(error_code != 0)
-      return error_code;
-    
-    file_position ++;
-   
-  }
-
-  error_code = error_handler.check_starting_positions(argv[file_position], file_position - 3);
-  if(error_code != 0){
+  if(error_code != NO_ERROR){
 
     return error_code;
 
@@ -72,7 +39,6 @@ int main(int argc, char** argv){
 
           
   auto machine = Enigma(argc, argv);
-
 
   machine.encrypt_message(message);
   

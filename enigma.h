@@ -22,7 +22,6 @@ public:
   /*encrypt function takes a digit and returns a value that wiring array stores in index equl to digit*/
   int encrypt(int digit);
   
-  void print_plug_board();
     
 };
 
@@ -42,7 +41,6 @@ public:
    /*encrypt function takes a digit and returns a value that wiring array stores in index equal to digit*/
   int encrypt(int digit);
   
-  void print_reflector();
     
 };
 
@@ -78,7 +76,6 @@ public:
   /*Outputs an array of notch positions*/
   int get_notches(int notches_array[]);
 
-  void print_rotor();
   
 };
 

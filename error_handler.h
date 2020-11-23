@@ -7,6 +7,9 @@ class Error_handler{
 
 public:
 
+  /*Runs all tests below*/
+  int error_testing(int argc, char **argv);
+  
   /*Checks that there is enough parameters */
   int check_parameters(int argc, char** argv);
 

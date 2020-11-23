@@ -9,6 +9,7 @@
 
 using namespace std;
 
+/*load_data is used to setup plugboard and reflector objects.*/
 int load_data(const char* filename, int wiring[]){
     
   ifstream in_stream;
@@ -30,7 +31,7 @@ int load_data(const char* filename, int wiring[]){
       
     }
 
-    for(auto i = 0u; i < input.length(); i++){
+    for(auto i = 0u; i < input.length(); i++){ //checks whether input is an integer
       
       if(!(isdigit(input[i]))){
 	in_stream.close();
@@ -41,7 +42,7 @@ int load_data(const char* filename, int wiring[]){
 
     stringstream ss(input);
     ss >> wiring[count];
-    if(wiring[count] > 25 || wiring[count] < 0){
+    if(wiring[count] > 25 || wiring[count] < 0){ //checks whether input is in range 
       in_stream.close();
       return -3;
     }
@@ -49,7 +50,7 @@ int load_data(const char* filename, int wiring[]){
     ss.str("");
        
     count++;
-    if(count > 1){
+    if(count > 1){                               //searches for duplicates 
       for(int i = 0; i < count-1; i++){
 	for(int j = 1; j < count - i; j++){
 	  if(wiring[i] == wiring[i+j]){
@@ -68,6 +69,7 @@ int load_data(const char* filename, int wiring[]){
   
 }
 
+/*load_data_rotors is used to setup rotor objects.*/
 int load_data_rotors(const char* filename, int wiring[]){
     
   ifstream in_stream;
@@ -90,7 +92,7 @@ int load_data_rotors(const char* filename, int wiring[]){
       
     }
 
-    for(auto i = 0u; i < input.length(); i++){
+    for(auto i = 0u; i < input.length(); i++){  //Checks whether input is an integer
       
       if(!(isdigit(input[i]))){
 	in_stream.close();
@@ -101,14 +103,14 @@ int load_data_rotors(const char* filename, int wiring[]){
 
     stringstream ss(input);
     ss >> wiring[count];
-    if(wiring[count] > 25 || wiring[count] < 0){
+    if(wiring[count] > 25 || wiring[count] < 0){  //Checks that whether input is in range 
       in_stream.close();
       return -3;
     }
     
     ss.str("");
 
-    if(count > 1 && count < NUM_LETTERS){
+    if(count > 1 && count < NUM_LETTERS){          //Searches for duplicates
       for(int i = 0; i < count-1; i++){
 	for(int j = 1; j < count - i -1; j++){
 	  if(wiring[i] == wiring[i+j]){
@@ -131,6 +133,7 @@ int load_data_rotors(const char* filename, int wiring[]){
   
 }
 
+/*load_data_starting positions is used to setup rotor rotor starting positions.*/
 int load_data_starting_positions(const char* filename, int positions[]){
     
   ifstream in_stream;
@@ -144,7 +147,7 @@ int load_data_starting_positions(const char* filename, int positions[]){
   
   while(in_stream >> input){
     
-    for(auto i = 0u; i < input.length(); i++){
+    for(auto i = 0u; i < input.length(); i++){   //checks whether input is an integer
       
       if(!(isdigit(input[i]))){
 	
@@ -157,7 +160,7 @@ int load_data_starting_positions(const char* filename, int positions[]){
     stringstream ss(input);
     
     ss >> positions[count];
-    if(positions[count] > 25 || positions[count] < 0){
+    if(positions[count] > 25 || positions[count] < 0){   //checks that whether input is in range 
       
       in_stream.close();
       return -3;

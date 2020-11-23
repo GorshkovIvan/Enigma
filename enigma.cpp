@@ -38,14 +38,6 @@ int Plug_board::encrypt(int digit){
   return wiring[digit];
     
 }
-  
-void Plug_board::print_plug_board(){
-  for(int i = 0; i < NUM_LETTERS; i++){
-     
-    cout << wiring[i] <<" ";
-     
-  }
-}
     
 
 Reflector::Reflector(){
@@ -76,12 +68,8 @@ int Reflector::encrypt(int digit){
   return wiring[digit];
     
 }
+  
 
-void Reflector::print_reflector(){
-  for(int i = 0; i < NUM_LETTERS; i++){
-    cout << wiring[i] <<" ";
-  }
-}
     
 
 Rotor::Rotor(const char* filename, int starting_position){
@@ -176,7 +164,7 @@ Enigma::Enigma(int number_of_files, char **files){    //constructor
 
 int Enigma::encrypt_character(int char_number){
 
-  if(rotor_exists){       //rotors can only rotate if they exist.
+  if(rotor_exists){                                                                        //rotors can only rotate if they exist.
   
     rotate_rotors();
 
@@ -199,7 +187,7 @@ int Enigma::encrypt_character(int char_number){
 
   if(rotor_exists){
     
-    for(int rotor_number = rotors.size()-1; rotor_number >= 0; rotor_number--){         //Encrypts by passing a letter from left to right if rotors exists.
+    for(int rotor_number = rotors.size()-1; rotor_number >= 0; rotor_number--){             //Encrypts by passing a letter from left to right if rotors exists.
 	
       encrypted_char_number = rotors[rotor_number].encrypt_backwards(encrypted_char_number);
       
@@ -217,7 +205,7 @@ bool Enigma::rotate_one_rotor(int right_rotor_position, int left_rotor_position)
   int notches_num = rotors[right_rotor_position].get_notches(right_rotor_notches);
 
     
-  for(int notch_index = 0; notch_index < notches_num; notch_index++){                      //Goes through notches of the rotor to the right and rotates rotor to its left if
+  for(int notch_index = 0; notch_index < notches_num; notch_index++){                        //Goes through notches of the rotor to the right and rotates rotor to its left if
                                                                                              //the notch is at the top position. 
     if(((right_rotor_notches[notch_index] + right_rotor_rotations) % NUM_LETTERS) == 0){
 	
