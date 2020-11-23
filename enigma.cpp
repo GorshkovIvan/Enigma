@@ -123,6 +123,7 @@ int load_data_rotors(const char* filename, int wiring[]){
   
 }
 
+
 Plug_board::Plug_board(){                                
    
   for(int i = 0; i < NUM_LETTERS; i++){
