@@ -11,7 +11,7 @@ using namespace std;
 
 /*load_data is used to setup plugboard and reflector objects.*/
 int load_data(const char* filename, int wiring[]){
-    
+  
   ifstream in_stream;
   string input;
   int count = 0;
@@ -51,7 +51,7 @@ int load_data(const char* filename, int wiring[]){
     }
     
     ss.str("");
-       
+    
     count++;
     if(count > 1){                              //searches for duplicates 
 
@@ -62,6 +62,7 @@ int load_data(const char* filename, int wiring[]){
 	  if(wiring[i] == wiring[i+j]){
 	    
 	    in_stream.close();
+	    
 	    return -59;
 	    
 	  }
@@ -110,7 +111,7 @@ int load_data_rotors(const char* filename, int wiring[]){
    
       }
     }
-
+    
     stringstream ss(input);
     ss >> wiring[count];
     
@@ -153,7 +154,7 @@ int load_data_rotors(const char* filename, int wiring[]){
 
 /*load_data_starting positions is used to setup rotor rotor starting positions.*/
 int load_data_starting_positions(const char* filename, int positions[]){
-    
+  
   ifstream in_stream;
   string input;
   int count = 0;
@@ -176,7 +177,7 @@ int load_data_starting_positions(const char* filename, int positions[]){
    
       }
     }
-
+    
     stringstream ss(input);
     
     ss >> positions[count];
@@ -188,11 +189,11 @@ int load_data_starting_positions(const char* filename, int positions[]){
     }
     
     ss.str("");
-	
+    
     count++;
     
   }
-
+  
   in_stream.close();
   
   return count;

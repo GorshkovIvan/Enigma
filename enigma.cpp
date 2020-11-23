@@ -14,7 +14,9 @@ using namespace std;
 Plug_board::Plug_board(){                                
    
   for(int i = 0; i < NUM_LETTERS; i++){
+    
     wiring[i] = i;
+    
   }
 }
   
@@ -43,7 +45,9 @@ int Plug_board::encrypt(int digit){
 Reflector::Reflector(){
    
   for(int i = 0; i < NUM_LETTERS; i++){
+    
     wiring[i] = i;
+    
   }
    
 }
@@ -70,7 +74,6 @@ int Reflector::encrypt(int digit){
 }
   
 
-    
 
 Rotor::Rotor(const char* filename, int starting_position){
     
@@ -100,7 +103,8 @@ int Rotor::encrypt_forwards(int digit){
   
   digit =  (digit + number_of_rotations) % NUM_LETTERS;      //Adjusts the  position at which the letter enters the rotor to the number of rotations.
   digit = (NUM_LETTERS + (wiring[digit][1] - (number_of_rotations % NUM_LETTERS))) % NUM_LETTERS; //Adjusts the postion at which the letter enters the next component 
-  return digit;                                                                                   //to the number of rotations.
+                                                                                                  //to the number of rotations.
+  return digit;                                                                                   
   
 }
 
@@ -242,9 +246,7 @@ void Enigma::encrypt_message(vector<char> &message){
     message[char_index] =  encrypt_character(message[char_index] - 65) + 65;                    //Converts a character to an integer when passed into the machine and  
                                                                                                 //and back after the encryption using ASCII code.
   }
-  
-  
-  
+    
 }
   
  
