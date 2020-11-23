@@ -46,7 +46,7 @@ int Error_handler::check_parameters(int argc, char** argv){
     
   }else{
 
-    cerr << "INSUFFICENT_NUMBER_OF_PARAMETERS (1)" << endl;
+    cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions" << endl;
     return 1;
 
   }
@@ -90,7 +90,7 @@ int Error_handler::check_character(char ch){
 
   if(ch < 65 || ch > 90){
 
-    cerr << "INVALID_INPUT_CHARACTER (2)" << endl;
+    cerr << ch << " is not a valid input character (input characters must be upper case letters A-Z)!";
     return 2;
 
   }
@@ -106,28 +106,28 @@ int Error_handler::check_plugboard(const char* filename){
 
   if(count == -4){
 
-    cerr << "Non-numeric character in plugboard file: " << filename;
-    return INVALID_INDEX;
+    cerr << "Non-numeric character in plugboard file " << filename;
+    return NON_NUMERIC_CHARACTER;
   }
  
   if(count == -59){
     
-      cerr << "IMPOSSIBLE_PLUGBOARD_CONFIGURATION (5)";
-      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+    cerr << "Incorrect number of parameters in plugboard file " << filename;
+    return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
   } 
 
   
-  if(count == -4){
+  if(count == -3){
 
-    cerr << "Non-numeric character in plugboard file " << filename; 
-    return NON_NUMERIC_CHARACTER;
+    cerr << "There is a number that is not between 0 and 25 in plugboard file " << filename; 
+    return INVALID_INDEX;
 
   }
 
-  if(count % 2 != 0){
+  if(count % 2 != 0 || count == -610){
     
-    cerr << "Incorrect number of parameters in plugboard file: "<< filename  << endl;
-    return 6;
+    cerr << "Incorrect number of parameters in plugboard file "<< filename  << endl;
+    return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
     
   }
   
@@ -143,7 +143,7 @@ int Error_handler::check_reflector(const char* filename){
   if(count == -4){
 
     cerr << "Non-numeric character in reflector file: " << filename;
-    return INVALID_INDEX;
+    return NON_NUMERIC_CHARACTER;
     
   }
   
@@ -153,20 +153,24 @@ int Error_handler::check_reflector(const char* filename){
     return INVALID_REFLECTOR_MAPPING;
   }
 
-  if(count == -4){
+  if(count == -3){
 
-    cerr << "Non-numeric character in reflector file " << filename; 
-    return NON_NUMERIC_CHARACTER;
+    cerr << "There is a number that is not between 0 and 25 in reflector file " << filename; 
+    return INVALID_INDEX;
 
   }
  
-  if(count  != NUM_LETTERS ){
-    if((count < NUM_LETTERS) && (count % 2 != 0)){
-      cerr << "Insufficient number of mappings in reflector file " << filename;
+  if(count  != NUM_LETTERS || count == -610){
+    if((count < NUM_LETTERS) && (count % 2 = 0)){
+      cerr << "Insufficient number of parameters in reflector file " << filename;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
     if(count %2 != 0){
       cerr << "Incorrect (odd) number of parameters in reflector file " << filename;
+    }else{
+
+      cerr << "Incorrect number of parameters in reflector file " << filename;
+      
     }
     return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     

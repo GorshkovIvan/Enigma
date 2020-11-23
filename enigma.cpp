@@ -40,6 +40,14 @@ int load_data(const char* filename, int wiring[]){
     }
     
     ss.str("");
+    
+    if(count ==  NUM_LETTERS){
+      
+      in_stream.close();
+      return -610;
+      
+    }
+   
     count++;
     if(count > 1){
       for(int i = 0; i < count-1; i++){
@@ -55,7 +63,7 @@ int load_data(const char* filename, int wiring[]){
   }
 
   in_stream.close();
-
+  cout << endl << count << endl;
   return count;
   
 }
